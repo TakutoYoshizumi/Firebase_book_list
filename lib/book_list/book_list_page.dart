@@ -1,5 +1,6 @@
 import 'package:firebase_booklist/add_book/add_book_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../domain/book.dart';
@@ -24,9 +25,33 @@ class BookListPage extends StatelessWidget {
 
               final List<Widget> widgets = books
                   .map(
-                    (book) => ListTile(
-                      title: Text(book.title),
-                      subtitle: Text(book.author),
+                    (book) => Slidable(
+                      endActionPane: ActionPane(
+                        motion: DrawerMotion(),
+                        children: [
+                          SlidableAction(
+                            onPressed: (value) {
+                              //編集画面に遷移
+                            },
+                            backgroundColor: Colors.greenAccent,
+                            foregroundColor: Colors.white,
+                            icon: Icons.edit,
+                            label: '編集',
+                          ),
+                          SlidableAction(
+                            onPressed: (value) {
+                              //削除しますか？聞いて、はいなら削除
+                            },
+                            backgroundColor: Colors.red,
+                            icon: Icons.delete,
+                            label: '削除',
+                          ),
+                        ],
+                      ),
+                      child: ListTile(
+                        title: Text(book.title),
+                        subtitle: Text(book.author),
+                      ),
                     ),
                   )
                   .toList();
