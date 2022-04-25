@@ -22,10 +22,11 @@ class BookListModel extends ChangeNotifier {
     final List<Book> books = snapshot.docs.map((DocumentSnapshot document) {
       //data()スナップショットからデータを取得
       Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+      final String id = document.id;
       final String title = data["title"];
       final String author = data["author"];
 
-      return Book(title, author);
+      return Book(id, title, author);
     }).toList();
 
     this.books = books;

@@ -4,6 +4,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:provider/provider.dart';
 
 import '../domain/book.dart';
+import '../edit_book/edit_book_page.dart';
 import 'book_list_model.dart';
 
 class BookListPage extends StatelessWidget {
@@ -30,8 +31,23 @@ class BookListPage extends StatelessWidget {
                         motion: DrawerMotion(),
                         children: [
                           SlidableAction(
-                            onPressed: (value) {
+                            onPressed: (value) async {
                               //編集画面に遷移
+                              final String? title = await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditBookPage(book),
+                                  ));
+
+                              if (title != null) {
+                                final snackBar = SnackBar(
+                                  backgroundColor: Colors.green,
+                                  content: Text("$titleを本を編集しました"),
+                                );
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
+                              model.fetchBookList();
                             },
                             backgroundColor: Colors.greenAccent,
                             foregroundColor: Colors.white,
